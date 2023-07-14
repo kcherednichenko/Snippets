@@ -25,10 +25,10 @@ def add_snippet_page(request):
         form = SnippetForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('pages/snippets_list')
+            return redirect('snippets_list')
 
         else:
-            return render(request, 'pages/snippets_list', {'form': form})
+            return render(request, 'pages/add_snippet.html', {'form': form})
 
 
 def snippets_page(request):
@@ -46,14 +46,15 @@ def snippets_page(request):
 def snippet_detail(request, snippet_id):
     try:
         snippet = Snippet.objects.get(id=snippet_id)
-    except ObjectDoesNotExist:
-        return HttpResponseNotFound(f"<text>Snippet with id = {snippet_id} not found</text>")
-    else:
         context = {
-            'snippet': snippet
+            'snippet': snippet,
+            'type': 'view'
         }
 
         return render(request, 'pages/snippet_detail.html', context)
+
+    except ObjectDoesNotExist:
+        raise Http404
 
 
 def snippet_delete(request, snippet_id):
