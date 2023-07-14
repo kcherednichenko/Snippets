@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponseNotFound
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from MainApp.models import Snippet
@@ -56,12 +56,9 @@ def snippet_detail(request, snippet_id):
         return render(request, 'pages/snippet_detail.html', context)
 
 
-def snippet_create(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        lang = request.POST['lang']
-        code = request.POST['code']
-        snippet = Snippet(name=name, lang=lang, code=code)
-        snippet.save()
+def snippet_delete(request, snippet_id):
+    snippet = Snippet.objects.get(id=snippet_id)
+    snippet.delete()
 
-        return redirect('snippets_list')
+    # redirect to the same page, where request came from
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
