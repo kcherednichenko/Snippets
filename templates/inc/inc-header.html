@@ -45,6 +45,11 @@
                         <div class="dropdown-divider"></div>
                     </div>
                 </div>
+                {% if errors %}
+                    {% for error in errors %}
+                        <li style="color: #dc3545">{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
     </nav>
