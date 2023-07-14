@@ -63,3 +63,29 @@ def snippet_delete(request, snippet_id):
 
     # redirect to the same page, where request came from
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def snippet_edit(request, snippet_id):
+    try:
+        snippet = Snippet.objects.get(id=snippet_id)
+
+    except ObjectDoesNotExist:
+        raise Http404
+
+    if request.method == 'GET':
+        context = {
+            'pagename': 'Edit snippet',
+            'snippet': snippet,
+            'type': 'edit'
+        }
+
+        return render(request, 'pages/snippet_detail.html', context)
+
+    if request.method == 'POST':
+        form_data = request.POST
+        snippet.name = form_data['name']
+        snippet.code = form_data['code']
+        snippet.creation_date = form_data['creation_date']
+        snippet.save()
+
+        return redirect('snippets_list')
