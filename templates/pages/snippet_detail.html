@@ -42,6 +42,14 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col">
+                        <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
+                        <input type="checkbox" name="is_public" value="True" {% if snippet.is_public %} checked {% endif %}> Is public
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <hr>
             <button type="submit">Edit</button>
