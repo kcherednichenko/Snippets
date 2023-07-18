@@ -35,7 +35,7 @@
             </div>
             {% if request.user.is_authenticated  %}
                 <span style="color: #138496"> Welcome, {{ user.username }}</span>
-                <a href="{%  url 'logout' %}">logout</a>
+                <a href="{%  url 'logout' %}" style="padding: 10px 10px">logout</a>
             {% else %}
                 <div class="navbar-nav mr-right nav-item dropdown dropdown-menu-right">
                     <a class="btn btn-outline-primary my-2 my-sm-0 dropdown-toggle" href="#" id="navbarDropdown"
