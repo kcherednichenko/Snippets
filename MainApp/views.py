@@ -11,8 +11,23 @@ from forms import SnippetForm, UserRegistrationForm
 
 
 def index_page(request):
-    context = {'pagename': 'PythonBin'}
-    return render(request, 'pages/index.html', context)
+    if request.method == "POST":
+        snippet_id = request.POST.get('snippet_id')
+        try:
+            snippet = Snippet.objects.get(id=snippet_id)
+            context = {
+                'snippet': snippet,
+                'type': 'view'
+            }
+
+            return render(request, 'pages/snippet_detail.html', context)
+
+        except ObjectDoesNotExist:
+            raise Http404(f'Snippet with id = {snippet_id} does not exist')
+
+    if request.method == "GET":
+        context = {'pagename': 'PythonBin'}
+        return render(request, 'pages/index.html', context)
 
 
 @login_required
